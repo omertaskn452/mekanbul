@@ -1,0 +1,32 @@
+const database = 'mekanbul';
+use(database);
+db.mekanlar.insertOne(
+{
+  "ad": "Mackbear",
+  "adres": "Iyaş",
+  "puan": 4,
+  "imkanlar": [
+    "çay",
+    "kahve",
+    "pasta"
+  ],
+  "koordinat": [
+    39.83226584629666,
+    33.524732239878013
+  ],
+  "saatler": [
+    {
+      "gunler": "Pazartesi-Cuma",
+      "acilis": "10:00",
+      "kapanis": "24:00",
+      "kapali": false
+    },
+    {
+      "gunler": "Cumartesi-Pazar",
+      "acilis": "12:00",
+      "kapanis": "15:00",
+      "kapali": false
+    }
+  ]
+}
+ );

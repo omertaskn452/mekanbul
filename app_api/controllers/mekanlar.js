@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Mekan=mongoose.model("mekan");
+
 const cevapOlustur=function(res,status,content){
     res
     .status(status)
