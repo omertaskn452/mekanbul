@@ -3,7 +3,6 @@ var router = express.Router();
 var ctrlMekanlar = require("../controllers/mekanlar");
 var ctrlYorumlar = require("../controllers/yorumlar");
 
-
 router
 .route("/mekanlar/:mekanid")
 .get(ctrlMekanlar.mekanGetir)
@@ -25,4 +24,4 @@ router
 .put(ctrlYorumlar.yorumGuncelle)
 .delete(ctrlYorumlar.yorumSil);
 
-module.exports=router;
+module.exports = router;
