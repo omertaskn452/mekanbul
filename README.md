@@ -1,3 +1,3 @@
 # Mekanbul
 
-https://mekanbul.quatamola.repl.co/?enlem=37&boylam=35
+https://mekanbul-8.quatamola.repl.co/?enlem=37&boylam=35
