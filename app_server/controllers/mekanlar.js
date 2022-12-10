@@ -1,5 +1,4 @@
 var express = require("express");
-var router = express.Router();
 const axios = require("axios");
 
 var apiSecenekleri = {
@@ -19,8 +18,6 @@ var mesafeyiFormatla = (mesafe) => {
   }
   return yeniMesafe + birim;
 };
-
-
 
 var anaSayfaOlustur = (res, mekanListesi) => {
   var mesaj;
@@ -68,38 +65,38 @@ var hataGoster = (res, hata) => {
 };
 
 
-const anaSayfa = function(req, res) {
-  axios.get(apiSecenekleri.sunucu+apiSecenekleri.apiYolu,{
-      params:{
-          enlem:req.query.enlem,
-          boylam:req.query.boylam
+const anaSayfa = function (req, res) {
+  const requestUrl = apiSecenekleri.sunucu + apiSecenekleri.apiYolu;
+  axios
+    .get(requestUrl, {
+      params: {
+        enlem: req.query.enlem,
+        boylam: req.query.boylam,
+      },
+    })
+    .then((response) => {
+      var i, mekanlar;
+      mekanlar = response.data;
+      for (i = 0; i < mekanlar.length; i++) {
+        mekanlar[i].mesafe = mesafeyiFormatla(mekanlar[i].mesafe);
       }
-  }).then(function(response){
-      var i,mekanlar;
-      mekanlar=response.data;
-      for (i=0;i<mekanlar.length;i++){
-          mekanlar[i].mesafe=mesafeyiFormatla(mekanlar[i].mesafe);
-
-      }
-      anaSayfaOlustur(res,mekanlar);
-
-  }).catch(function(hata){
-      anaSayfaOlustur(res,hata);
-  });
-
+      anaSayfaOlustur(res, mekanlar);
+    })
+    .catch((hata) => {
+      anaSayfaOlustur(res, hata);
+    });
 };
 
-const mekanBilgisi = function(req, res){
+const mekanBilgisi = function (req, res, next) {
   axios
-      .get(apiSecenekleri.sunucu + apiSecenekleri.apiYolu + req.params.mekanid)
-      .then(function(response){
-          req.session.mekanAdi = response.data.ad;
-          detaySayfasiOlustur(res, response.data);
-
-      })
-      .catch(function(hata){
-          hataGoster(res,hata);
-      });
+    .get(apiSecenekleri.sunucu + apiSecenekleri.apiYolu + req.params.mekanid)
+    .then((response) => {
+      req.session.mekanAdi = response.data.ad;
+      detaySayfasiOlustur(res, response.data);
+    })
+    .catch((hata) => {
+      hataGoster(res, hata);
+    });
 };
 
 const yorumEkle = function(req, res) {
@@ -108,7 +105,7 @@ const yorumEkle = function(req, res) {
   if(!mekanAdi)
   res.redirect("/mekan/"+ mekanid);
   else res.render("yorumekle",{
-      baslik: mekanAdi + " mekanına yorum ekle"});
+    baslik: mekanAdi + " mekanına yorum ekle"});
 };
 
 const yorumumuEkle=function(req,res) {
@@ -136,7 +133,6 @@ const yorumumuEkle=function(req,res) {
           });
   }
 };
-
 
 module.exports = {
   anaSayfa,

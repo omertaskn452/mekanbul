@@ -177,4 +177,3 @@ module.exports = {
     mekanGuncelle,
     mekanSil
 }
-
